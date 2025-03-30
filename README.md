@@ -44,12 +44,11 @@ Redis: An in-memory data store for caching or fast data access, running on port 
 
 
 ## API Versioning and Backward Compatibility
-An API’s specification resembles a commitment between services, leading developers to typically presume that it remains unchanged when interacting with other services.
+- An API specification is like an agreement between services, which often leads developers to assume that it will remain consistent when interacting with other services.
 
+- However, API request and response specifications are bound to change over time. Due to the nature of microservices, where services are often split based on the organization’s structure, it can be difficult to quickly notify all affected services of these changes. This lack of coordination often results in system failures.
 
-However, API request and response specifications are inevitably subject to change. Due to the nature of microservices, where services are often divided based on organizational structure, it can be challenging to promptly notify all affected services about these changes. This lack of coordination frequently leads to system failures.
-
-The most classic approach to handling changes in API specifications is for all affected services to update simultaneously to adapt.
+- The most common approach to managing changes in API specifications is for all affected services to update at the same time to stay in sync.
 
 
 
