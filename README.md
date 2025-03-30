@@ -43,13 +43,20 @@ Redis: An in-memory data store for caching or fast data access, running on port 
 
 
 
-## API Versioning and Backward Compatibility
-- An API specification is like an agreement between services, which often leads developers to assume that it will remain consistent when interacting with other services.
+## Backward Compatibility
+- When an API is changed, the old request and response methods must still be supported.
+- For example, if a new property is added to a request, it should not be required, and the request should still return the same response even if the new property is left empty.
+- When the response changes, the existing response must be maintained, and only new responses can be added, without modifying the key-value structure of the original response.
+- In strong-typed languages like Java, controlling this is relatively easy, but in Kotlin, issues like nullable settings can cause compatibility problems and errors.
+- In languages like TypeScript or Kotlin, adding something extra to the response may cause errors, so it’s important to configure the system to ignore unknown properties during deserialization.
 
-- However, API request and response specifications are bound to change over time. Due to the nature of microservices, where services are often split based on the organization’s structure, it can be difficult to quickly notify all affected services of these changes. This lack of coordination often results in system failures.
-
-- The most common approach to managing changes in API specifications is for all affected services to update at the same time to stay in sync.
-
-
+## API Versioning
+- If it’s not possible to maintain the existing request and response formats, a new version of the API should be created.
+- API versions are usually separated by paths like `/api/v1`, `/api/v2`.
+- When creating a new version of the API, the old version must still be provided, and care must be taken to ensure that changes to the new version do not affect the old version.
+- Managing two versions of an API increases overhead, and as versions grow, it becomes more difficult to maintain and prone to mistakes.
+- If the old version of the API is no longer in use, it’s best to delete it. The usage status can be checked either through communication within the team or by monitoring to ensure there are no further calls to the endpoint.
+- A common practice is to gradually phase out the old version after deploying the new one.
+- This approach applies not only to HTTP but also to message queues. By adding versioning to message properties or headers, you can ensure messages are consumed according to the correct version.
 
 ![API Versioning](image/api-versioning.png)
